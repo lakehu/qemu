@@ -296,14 +296,6 @@ static void stm32_create_dac_dev(
     
 }
 
-/*
-static uint64_t kernel_load_translate_fn(void *opaque, uint64_t from_addr) {
-    if (from_addr == STM32_FLASH_ADDR_START) {
-        return 0x00000000;
-    }
-    return from_addr;
-}
-*/
 
 static void stm32f103_soc_initfn(Object *obj)
 {
@@ -364,21 +356,12 @@ static void stm32f103_soc_realize(DeviceState *dev_soc, Error **errp)
     Object *stm32_container = container_get(qdev_get_machine(), "/stm32");
   
     MemoryRegion *sram = g_new(MemoryRegion, 1);
-    ///MemoryRegion *flash = g_new(MemoryRegion, 1);
-    
-/*
-    pic = armv7m_translated_init(
-              stm32_container,
-              address_space_mem,
-              flash_size,
-              ram_size,
-              kernel_filename,
-              kernel_load_translate_fn,
-              NULL,
-              "cortex-m3");*/
+    MemoryRegion *flash = g_new(MemoryRegion, 1);
+
+
     /* Flash programming is done via the SCU, so pretend it is ROM.  */
-    //memory_region_init_rom(flash, NULL, "stm32.flash", s->flash_size, &error_fatal);
-    //memory_region_add_subregion(address_space_mem, 0, flash);
+    memory_region_init_rom(flash, NULL, "stm32.flash", s->flash_size, &error_fatal);
+    memory_region_add_subregion(address_space_mem, 0, flash);
 
     memory_region_init_ram(sram, NULL, "stm32.sram", s->ram_size, &error_fatal);
     memory_region_add_subregion(address_space_mem, 0x20000000, sram);
