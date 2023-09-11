@@ -33,7 +33,7 @@
 /* DEFINITIONS*/
 
 /* See README for DEBUG details. */
-//#define DEBUG_STM32_RCC
+#define DEBUG_STM32_RCC
 
 #ifdef DEBUG_STM32_RCC
 #define DPRINTF(fmt, ...)                                       \
@@ -765,15 +765,15 @@ static void stm32_rcc_hclk_upd_irq_handler(void *opaque, int n, int level)
         //external_ref_clock_scale = NANOSECONDS_PER_SECOND / ext_ref_freq;
         clock_set_ns(s->sysclk, system_clock_scale);
         //clock_propagate(s->sysclk);
-    }
 
 #ifdef DEBUG_STM32_RCC
     DPRINTF("Cortex SYSTICK frequency set to %lu Hz (scale set to %d).\n",
                 (unsigned long)hclk_freq, system_clock_scale);
     DPRINTF("Cortex SYSTICK ext ref frequency set to %lu Hz "
-              "(scale set to %d).\n",
-              (unsigned long)ext_ref_freq, external_ref_clock_scale);
+              "\n",
+              (unsigned long)ext_ref_freq );
 #endif
+    }
 }
 
 

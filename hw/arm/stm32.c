@@ -296,12 +296,14 @@ static void stm32_create_dac_dev(
     
 }
 
+/*
 static uint64_t kernel_load_translate_fn(void *opaque, uint64_t from_addr) {
     if (from_addr == STM32_FLASH_ADDR_START) {
         return 0x00000000;
     }
     return from_addr;
 }
+*/
 
 static void stm32f103_soc_initfn(Object *obj)
 {
@@ -362,7 +364,7 @@ static void stm32f103_soc_realize(DeviceState *dev_soc, Error **errp)
     Object *stm32_container = container_get(qdev_get_machine(), "/stm32");
   
     MemoryRegion *sram = g_new(MemoryRegion, 1);
-    MemoryRegion *flash = g_new(MemoryRegion, 1);
+    ///MemoryRegion *flash = g_new(MemoryRegion, 1);
     
 /*
     pic = armv7m_translated_init(
